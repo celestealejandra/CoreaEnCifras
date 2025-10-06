@@ -15,6 +15,8 @@ library(showtext)
 font_add_google("Montserrat", "Montserrat")  # O cualquier fuente similar, p. ej. "Poppins"
 showtext_auto()
 
+#Link de descarga de datos
+#https://population.un.org/wpp/assets/Excel%20Files/5_Archive/WPP2019-Excel-files.zip
 
 #Importar datos 
 #Hombres 
@@ -87,5 +89,6 @@ pop2 %>%
     axis.text = element_text(size = 11),                              # etiquetas de ejes legibles
     plot.caption = element_text(size = 10, face = "italic", hjust = 1) # caption en itálica
   )
+
 
 
