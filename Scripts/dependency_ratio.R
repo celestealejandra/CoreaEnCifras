@@ -10,12 +10,9 @@ library(forcats)
 library(ggplot2)
 library(viridis)
 library(showtext)
-#Fuente para gráficos
+
 font_add_google("Montserrat", "Montserrat")  # O cualquier fuente similar, p. ej. "Poppins"
 showtext_auto()
-
-#Link de descarga de datos
-#https://population.un.org/wpp/assets/Excel%20Files/5_Archive/WPP2019-Excel-files.zip
 
 #Radio de Dependencia de Adultos mayores
 dep_ratio <- read_excel("WPP2019-Excel-files/1_Population/WPP2019_POP_F13_A_OLD_AGE_DEPENDENCY_RATIO_1564.xlsx", 
@@ -83,28 +80,38 @@ library(ggplot2)
 
 
 ggplot(sk_dpr) +
- aes(x = anio, y = infant_dpr) +
- geom_line(linewidth = 1L, colour = "#DC4F4F") +
- geom_line(aes(x = anio, 
- y = total_dpr), linewidth = 1L, colour = "#000000") +
-  geom_line(aes(x = anio, 
-                y = oldage_dpr), linewidth = 1L, colour = "#167742") +
-  geom_vline(xintercept = 2016, linewidth = 0.85, color = "red", linetype="dashed") +
+  aes(x = anio) +
+  geom_line(aes(y = infant_dpr, color = "Infantil"), linewidth = 1) +
+  geom_line(aes(y = total_dpr, color = "Total"), linewidth = 1) +
+  geom_line(aes(y = oldage_dpr, color = "Edad mayor"), linewidth = 1) +
+  geom_vline(xintercept = 2016, linewidth = 0.85, color = "red", linetype = "dashed") +
+  scale_color_manual(
+    name = "Tipo de dependencia",
+    values = c(
+      "Infantil" = "#DC4F4F",
+      "Total" = "#000000",
+      "Edad mayor" = "#167742"
+    )
+  ) +
   scale_y_continuous(
     limits = c(0, 100),
     breaks = seq(0, 100, 20),
-    labels = seq(0, 100, 20)) +
- labs(x = "Año", 
- y = "Radio de Dependencia", title = "Radios de dependencia en Corea del Sur: Infantil, De edad mayor y Total - 1950 a 2020", 
- caption = "Fuente: Elaboración Propia con Estimaciones de World Population Prospects") +
- theme_light(base_family = "Montserrat") +
+    labels = seq(0, 100, 20)
+  ) +
+  labs(
+    x = "Año",
+    y = "Radio de dependencia",
+    title = "Radios de dependencia en Corea del Sur: Infantil, De edad mayor y Total (1950–2020)",
+    caption = "Fuente: Elaboración propia con estimaciones de World Population Prospects"
+  ) +
+  theme_light(base_family = "Montserrat") +
   theme(
-    plot.title = element_text(size = 15, face = "bold", hjust = 0.5),  # título grande y en negritas
-    axis.title = element_text(size = 14),                             # títulos de ejes más grandes
-    axis.text = element_text(size = 11),                              # etiquetas de ejes legibles
-    plot.caption = element_text(size = 10, face = "italic", hjust = 1) # caption en itálica
+    plot.title = element_text(size = 15, face = "bold", hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 11),
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 11),
+    plot.caption = element_text(size = 10, face = "italic", hjust = 1)
   )
-
-
 
 
